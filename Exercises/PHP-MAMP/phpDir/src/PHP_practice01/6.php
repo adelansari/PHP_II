@@ -16,13 +16,18 @@
 
     <?php
 
-		/*  Step1: Make a form that submits one value to POST super global
+    /*
+        Step1: Make a form that submits one value to POST super global
+      */
+
+    if (isset($_POST['submit'])) {
+      echo $_POST['name'];
+    }
 
 
- */
 
 
-		?>
+    ?>
 
 
   </article>

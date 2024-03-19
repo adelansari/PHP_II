@@ -27,7 +27,20 @@
 		  Step3: Make 2 Arrays with the same values, one regular and the other associative
 
 		 
-			 */
+		*/
+
+		$number1 = 10;
+		$number2 = 20;
+
+		$sum = $number1 + $number2;
+
+		echo "$number1 + $number2 = $sum";
+
+		$array1 = [$number1, $number2];
+		$array2 = ["number1" => $number1, "number2" => $number2];
+		echo "<br>" . $array1[0];
+		echo "<br>";
+		var_dump($array2)
 
 
 

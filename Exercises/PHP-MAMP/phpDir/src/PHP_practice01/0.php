@@ -19,11 +19,12 @@
     </head>
 
     <body>
-    <?php
-    /*
+      <?php
+      /*
     Step 1:  Write "Hello PHP"
     */
-    ?>
+      echo "Hello World.";
+      ?>
     </body>
 
     </html>

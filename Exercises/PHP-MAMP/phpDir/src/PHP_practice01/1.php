@@ -24,7 +24,10 @@
 		   what that function is doing.
 
 
-		   */
+		  */
+
+    // Printing Hello World as a heading 1 using.
+    echo "<h1>Hello World</h1>";
 
     ?>
 

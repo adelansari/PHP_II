@@ -20,6 +20,8 @@
         Step 3:  Use a pre-built Array function here and echo it
       */
 
+    $arr = [1, 2, 3, 4, 5, 6];
+
     echo "<p>" . pow(2, 3) . " is the result of 2 raised to the power of 3</p>";
     echo "<p>" . strtoupper("hello world") . " converts the string to uppercase</p>";
     echo "<p>" . max($arr) . " is the maximum value in the array</p>";

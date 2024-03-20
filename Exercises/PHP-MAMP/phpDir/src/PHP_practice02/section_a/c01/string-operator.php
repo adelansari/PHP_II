@@ -1,9 +1,13 @@
 <?php
 
 /* 
-  Write you php code here
+  Write a PHP code to contcatenate greeting e.g. “Thank you” to customer who bought his candy order. Customer name can be anything for example “Mr. James”. The page should show:
+  Mr. James’s Order
+  Thank you, Mr. James
+*/
 
-   */
+$customerName = "Mr. James";
+$greeting = "Thank you, " . $customerName;
 
 ?>
 <!DOCTYPE html>
@@ -16,6 +20,8 @@
 
 <body>
   <h1>The Candy Store</h1>
+  <p><?= $customerName; ?>'s Order</p>
+  <p><?= $greeting; ?></p>
 
 </body>
 

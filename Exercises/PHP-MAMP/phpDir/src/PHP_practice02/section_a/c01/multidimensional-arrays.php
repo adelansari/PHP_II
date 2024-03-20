@@ -36,7 +36,7 @@ $offers = array(
   <h2>Offers</h2>
   <?php
   foreach ($offers as $offer) {
-    echo "<p>" . $offer["name"] . " - €" . $offer["price"] . " - " . $offer["stock"] . " in stock</p>";
+    echo "<p> {$offer['name']} - €{$offer['price']} - {$offer['stock']} in stock</p>";
   }
   ?>
 

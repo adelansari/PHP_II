@@ -22,9 +22,17 @@ $nutrition = array(
 <body>
   <h1>The Candy Store</h1>
   <h2>Nutrition (per 100g)</h2>
-  <p>Fat: <?php echo $nutrition["fat"] * 100; ?>%</p>
-  <p>Sugar: <?php echo $nutrition["sugar"] * 100; ?>%</p>
-  <p>Salt: <?php echo $nutrition["salt"] * 100; ?>%</p>
+  <!-- 
+    <p>Fat: <?php echo $nutrition["fat"] * 100; ?>%</p>
+    <p>Sugar: <?php echo $nutrition["sugar"] * 100; ?>%</p>
+    <p>Salt: <?php echo $nutrition["salt"] * 100; ?>%</p> 
+  -->
+  <?php
+  foreach ($nutrition as $key => $value) {
+    $valuePercentage = $value * 100;
+    echo "<p>$key: $value%</p>";
+  }
+  ?>
 
 </body>
 

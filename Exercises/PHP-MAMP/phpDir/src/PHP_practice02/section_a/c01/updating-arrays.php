@@ -27,7 +27,7 @@ $nutrition["fiber"] = "1.2g";
   <h2>Nutrition (per 100g)</h2>
   <?php
   foreach ($nutrition as $key => $value) {
-    echo "<p>" . $key . ": " . $value . "</p>";
+    echo "<p>{$key}: {$value}</p>";
   }
   ?>
 

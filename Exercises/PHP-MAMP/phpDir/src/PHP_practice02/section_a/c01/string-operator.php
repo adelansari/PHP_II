@@ -7,7 +7,7 @@
 */
 
 $customerName = "Mr. James";
-$greeting = "Thank you, " . $customerName;
+$greeting = "Thank you, "
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ $greeting = "Thank you, " . $customerName;
 <body>
   <h1>The Candy Store</h1>
   <p><?= $customerName; ?>'s Order</p>
-  <p><?= $greeting; ?></p>
+  <p><?= $greeting . $customerName; ?></p>
 
 </body>
 

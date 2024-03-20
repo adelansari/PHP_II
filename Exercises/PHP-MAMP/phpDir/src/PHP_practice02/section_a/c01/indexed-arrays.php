@@ -26,15 +26,24 @@ $best_sellers = array(
 <body>
   <h1>The Candy Store</h1>
   <h2>Best Sellers</h2>
+  <h2>Using foreach loop</h2>
   <?php
   foreach ($best_sellers as $key => $value) {
     if ($key < 3) {
       $orderList = $key + 1;
-      echo "<p>{$orderList}. {$value}</p>";
+      echo "<p>$orderList. $value</p>";
     }
   }
   ?>
 
+  <h2>Using ordered list</h2>
+  <ol>
+    <?php
+    for ($i = 0; $i < 3; $i++) {
+      echo "<li>$best_sellers[$i]</li>";
+    }
+    ?>
+  </ol>
 </body>
 
 </html>

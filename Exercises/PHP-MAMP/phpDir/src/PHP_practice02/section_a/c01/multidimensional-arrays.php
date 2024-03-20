@@ -34,11 +34,9 @@ $offers = array(
 <body>
   <h1>The Candy Store</h1>
   <h2>Offers</h2>
-  <?php
-  foreach ($offers as $offer) {
-    echo "<p> {$offer['name']} - €{$offer['price']} - {$offer['stock']} in stock</p>";
-  }
-  ?>
+  <?php foreach ($offers as $offer) : ?>
+    <p> <?php echo "{$offer['name']} - €{$offer['price']} - {$offer['stock']} in stock"; ?> </p>
+  <?php endforeach; ?>
 
 </body>
 

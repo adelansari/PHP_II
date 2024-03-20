@@ -29,14 +29,11 @@ $best_sellers = array(
   <?php
   foreach ($best_sellers as $key => $value) {
     if ($key < 3) {
-      echo "<p>" . ($key + 1) . ". " . $value . "</p>";
+      $orderList = $key + 1;
+      echo "<p>{$orderList}. {$value}</p>";
     }
   }
   ?>
-
-
-
-
 
 </body>
 

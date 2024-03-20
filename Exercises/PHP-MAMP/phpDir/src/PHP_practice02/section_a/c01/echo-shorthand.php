@@ -5,7 +5,9 @@
 */
 
 $name = "Adel";
-$candy = "chocolate bar";
+$candy = ["Toffee", "Mints", "Fudge"];
+$candy_string = implode(", ", $candy);
+
 
 
 
@@ -21,7 +23,7 @@ $candy = "chocolate bar";
 <body>
   <h1>The Candy Store</h1>
   <h2>Welcome <?= $name; ?></h2>
-  <p>Your favorite candy is: <?= $candy; ?></p>
+  <p>Your favorite candy is: <?= $candy_string; ?></p>
 
 </body>
 

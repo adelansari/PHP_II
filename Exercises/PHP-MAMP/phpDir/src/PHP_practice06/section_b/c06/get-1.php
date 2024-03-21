@@ -44,4 +44,11 @@ $address = $cities[$city];
   <a href="get-1.php?city=<?= $key ?>"> <?= $key ?></a>
 <?php } ?>
 
+<!-- Display city data -->
+<?php if (isset($city) && isset($address)) : ?>
+  <p>City: <?= $city ?></p>
+  <p>Address: <?= $address ?></p>
+<?php endif; ?>
+
+
 <?php include 'includes/footer.php' ?>

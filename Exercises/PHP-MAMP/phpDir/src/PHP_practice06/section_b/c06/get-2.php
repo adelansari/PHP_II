@@ -20,9 +20,27 @@ Step 4:  If the value in the city is a blank string it should display
 
 */
 
+$cities = [
+    'Helsinki' => '48 Store Street, WC1E 7BS',
+    'Sydney' => '151 Oxford Street, 2021',
+    'London' => '1242 7th Street, 10492'
+];
+
+$city = $_GET['city'] ?? '';
+$address = $cities[$city] ?? '';
+
 ?>
 
+<?php foreach ($cities as $key => $value) { ?>
+    <a href="get-2.php?city=<?= $key ?>"> <?= $key ?></a>
+<?php } ?>
 
-//Write your code here
+<!-- Display city data -->
+<?php if ($city !== '' && $address !== '') : ?>
+    <p>City: <?= $city ?></p>
+    <p>Address: <?= $address ?></p>
+<?php else : ?>
+    <p>Please select a city</p>
+<?php endif; ?>
 
 <?php include 'includes/footer.php' ?>

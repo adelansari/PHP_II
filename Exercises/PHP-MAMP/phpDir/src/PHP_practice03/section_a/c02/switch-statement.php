@@ -9,7 +9,7 @@ $discounts = array(
 );
 
 $candy = "chocolate";
-$day = "Monday";
+$day = "Thursday";
 
 switch ($day) {
   case "Monday":

@@ -27,14 +27,14 @@ $endPack = 100;
 
   <!-- Alternative way: -->
   <h2>Method B</h2>
-  <p>
-    <?php
-    /* Write your code here */
-    for ($startPack; $startPack <= $endPack; $startPack++) {
-      echo "<p>Price for $startPack pack(s): $" . number_format($price * $startPack, 2) . "</p>";
-    }
-    ?>
-  </p>
+
+  <?php
+  /* Write your code here */
+  for ($startPack; $startPack <= $endPack; $startPack++) {
+    echo "<p>Price for $startPack pack(s): $" . number_format($price * $startPack, 2) . "</p>";
+  }
+  ?>
+
 </body>
 
 </html>

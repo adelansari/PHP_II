@@ -7,7 +7,7 @@
 //After fixing this form, simply run it few times to check how this works
 ?>
 
-<form>
+<form method="post">
   <p>Name: <input type="text" name="name"></p>
   <p>Age: <input type="text" name="age"></p>
   <p>Email: <input type="text" name="email"></p>
@@ -17,7 +17,8 @@
     <select name="preferences">
       <option value="email">Email</option>
       <option value="phone">Phone</option>
-    </select></p>
+    </select>
+  </p>
   <p>Rating:
     1 <input type="radio" name="rating" value="1">
     2 <input type="radio" name="rating" value="2">
@@ -28,5 +29,7 @@
 </form>
 
 <pre><?php var_dump($_POST); ?></pre>
+
+
 
 <?php include 'includes/footer.php'; ?>

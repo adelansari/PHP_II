@@ -4,8 +4,8 @@
 */
 
 $candy = "chocolate";
-$inStock = true;
-$stock = $inStock ? "In Stock" : "Sold Out";
+$inStock = 5;
+$stock = ($inStock > 0) ? "In Stock" : "Sold Out";
 ?>
 <!DOCTYPE html>
 <html>

@@ -17,9 +17,36 @@ and if any of the cities are valid, and if those cities are not defined, you can
 
 */
 
+$cities = [
+    'Helsinki' => '48 Store Street, WC1E 7BS',
+    'Sydney' => '151 Oxford Street, 2021',
+    'London' => '1242 7th Street, 10492'
+];
+
+
+$city = $_GET['city'] ?? '';
+$isValidCity = array_key_exists($city, $cities);
+$address = $cities[$city] ?? '';
+
+
+if (!$isValidCity && $city !== '') {
+    header('Location: page-not-found.php');
+    exit;
+}
 ?>
+
 <?php include 'includes/header.php' ?>
 
-//Write your code here
+<?php foreach ($cities as $key => $value) { ?>
+    <a href="get-3.php?city=<?= $key ?>"> <?= $key ?></a>
+<?php } ?>
+
+<!-- Display city data -->
+<?php if ($city !== '' && $address !== '') : ?>
+    <p>City: <?= $city ?></p>
+    <p>Address: <?= $address ?></p>
+<?php else : ?>
+    <p>Please select a city</p>
+<?php endif; ?>
 
 <?php include 'includes/footer.php' ?>

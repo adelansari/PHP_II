@@ -20,9 +20,8 @@ $counter = 1;
 
   <h2>Method B</h2>
   <?php while ($counter <= $packs) : ?>
-    <p>Price for <?php echo $counter; ?> pack(s): $<?php echo number_format($price * $counter, 2); ?></p>
-  <?php $counter++;
-  endwhile; ?>
+    <p>Price for <?php echo $counter; ?> pack(s): $<?= $price * $counter++ ?></p>
+  <?php endwhile; ?>
 
   <!-- Alternative Approuch: -->
   <h2>Method A</h2>
@@ -30,7 +29,7 @@ $counter = 1;
     <?php
     /* Write your code here */
     while ($counter <= $packs) {
-      echo "Price for $counter pack(s): $" . number_format($price * $counter, 2) . "<br>";
+      echo "Price for $counter pack(s): $" . $price * $counter . "<br>";
       $counter++;
     }
     ?>

@@ -20,7 +20,7 @@ $counter = 1;
 
   <h2>Method B</h2>
   <?php while ($counter <= $packs) : ?>
-    <p>Price for <?php echo $counter; ?> pack(s): $<?= $price * $counter++ ?></p>
+    <p>Price for <?= $counter; ?> pack(s): $<?= $price * $counter++ ?></p>
   <?php endwhile; ?>
 
   <!-- Alternative Approuch: -->

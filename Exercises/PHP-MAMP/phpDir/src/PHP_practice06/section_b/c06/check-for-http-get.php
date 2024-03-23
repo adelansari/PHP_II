@@ -15,8 +15,18 @@ If it is, the form should be then sent via HTTP GET and the search term is displ
 
 Step 3: Otherwise, simply display the form
 
-
 */
 ?>
+
+<?php if (isset($_GET['search'])) :
+  $searchTerm = $_GET['search'] ?? ''; ?>
+  <p>You searched for <?= htmlspecialchars($searchTerm) ?></p>
+  <input onclick="window.history.back()" type="submit" value="Go back">
+<?php else : ?>
+  <form method="get">
+    <p>Search: <input type="text" name="search"></p>
+    <p><input type="submit" value="Search"></p>
+  </form>
+<?php endif; ?>
 
 <?php include 'includes/footer.php'; ?>

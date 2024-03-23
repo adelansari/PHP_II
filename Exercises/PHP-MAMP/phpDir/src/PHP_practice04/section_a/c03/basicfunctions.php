@@ -12,37 +12,26 @@ Create three functions to generate the values as shown in this table. Price for 
   Fudge 8 Yes $32 $6.4
 */
 
-$products = [
-  [
-    "candyName" => "Toffee",
-    "stock" => 12,
-    "price" => 3
-  ],
-  [
-    "candyName" => "Mints",
-    "stock" => 26,
-    "price" => 2
-  ],
-  [
-    "candyName" => "Fudge",
-    "stock" => 8,
-    "price" => 4
-  ]
+$candy = [
+  'Toffee' => ['price' => 3, 'stock' => 12],
+  'Mints' => ['price' => 2, 'stock' => 26],
+  'Fudge' => ['price' => 4, 'stock' => 8],
 ];
+$tax = 20;
 
-function reOrder($stock)
+function get_reorder_message(int $stock): string
 {
-  return $stock < 10 ? "Yes" : "No";
+  return ($stock < 10) ? 'Yes' : 'No';
 }
 
-function totalValue($stock, $price)
+function get_total_value(float $price, int $quantity): float
 {
-  return $stock * $price;
+  return $price * $quantity;
 }
 
-function taxDue($totalValue)
+function get_tax_due(float $price, int $quantity, int $tax = 0): float
 {
-  return $totalValue * 0.2;
+  return ($price * $quantity) * ($tax / 100);
 }
 
 
@@ -69,13 +58,13 @@ function taxDue($totalValue)
 
     <!-- Write code here: -->
 
-    <?php foreach ($products as $product) : ?>
+    <?php foreach ($candy as $product => $data) : ?>
       <tr>
-        <td><?= $product["candyName"]; ?></td>
-        <td><?= $product["stock"]; ?></td>
-        <td><?= reOrder($product["stock"]); ?></td>
-        <td><?= totalValue($product["stock"], $product["price"]); ?></td>
-        <td><?= taxDue(totalValue($product["stock"], $product["price"])); ?></td>
+        <td><?= $product ?></td>
+        <td><?= $data['stock'] ?></td>
+        <td><?= get_reorder_message($data['stock']) ?></td>
+        <td><?= get_total_value($data['price'], $data['stock']) ?></td>
+        <td><?= get_tax_due($data['price'], $data['stock'], $tax) ?></td>
       </tr>
     <?php endforeach; ?>
 

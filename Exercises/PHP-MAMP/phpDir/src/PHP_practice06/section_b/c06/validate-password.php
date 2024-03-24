@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Store data in session
     $_SESSION['message'] = $message;
+    $_SESSION['valid'] = $valid;
 
     // Redirect to the same page
     header('Location: validate-password.php');
@@ -72,7 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Retrieve data from session
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
+    $valid = $_SESSION['valid'];
     unset($_SESSION['message']);
+    unset($_SESSION['valid']);
 }
 ?>
 
@@ -86,8 +89,19 @@ if (isset($_SESSION['message'])) {
     </form>
 
     <?php if (!empty($message)) : ?>
-        <p><?= $message ?></p>
+        <p class="<?= $valid ? 'success' : 'error' ?>"><?= $message ?></p>
     <?php endif; ?>
 </div>
+
+<style>
+    .error {
+        color: red;
+    }
+
+    .success {
+        color: lime;
+    }
+</style>
+
 
 <?php include 'includes/footer.php'; ?>

@@ -70,9 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = $valid ? 'Password is valid' : 'Password is not strong enough.';
 
     // Store data in session
-    $_SESSION['message'] = $message;
-    $_SESSION['valid'] = $valid;
-    $_SESSION['errors'] = $errors;
+    $_SESSION = compact('message', 'valid', 'errors');
 
     // Redirect to the same page
     header('Location: validate-password.php');
@@ -80,14 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Retrieve data from session
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    $valid = $_SESSION['valid'];
-    $errors = $_SESSION['errors'];
-    unset($_SESSION['message']);
-    unset($_SESSION['valid']);
-    unset($_SESSION['errors']);
-}
+extract($_SESSION ?? []);
+$_SESSION = [];
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -104,7 +96,7 @@ if (isset($_SESSION['message'])) {
         <?php if (!$valid) : ?>
             <ul class="error">
                 <?php foreach ($errors as $error) : ?>
-                    <li><?= $error ?></li>
+                    <li>Password must be <?= $error ?>.</li>
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>

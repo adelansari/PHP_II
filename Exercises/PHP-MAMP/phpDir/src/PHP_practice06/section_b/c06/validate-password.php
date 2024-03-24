@@ -34,28 +34,19 @@ session_start();
 // step 1
 $password = '';
 $message = '';
-$errors = [];
 
 // step 2
 function isValidPassword($password)
 {
     // step 3
-    $errors = [];
+    $rules = [
+        'at least 8 characters long' => mb_strlen($password) >= 8,
+        'at least one uppercase letter' => preg_match('/[A-Z]/', $password),
+        'at least one lowercase letter' => preg_match('/[a-z]/', $password),
+        'at least one number' => preg_match('/[0-9]/', $password),
+    ];
 
-    if (mb_strlen($password) < 8) {
-        $errors[] = 'Password must be at least 8 characters long.';
-    }
-    if (!preg_match('/[A-Z]/', $password)) {
-        $errors[] = 'Password must contain at least one uppercase letter.';
-    }
-    if (!preg_match('/[a-z]/', $password)) {
-        $errors[] = 'Password must contain at least one lowercase letter.';
-    }
-    if (!preg_match('/[0-9]/', $password)) {
-        $errors[] = 'Password must contain at least one number.';
-    }
-
-    return $errors;
+    return array_keys(array_filter($rules, fn ($passed) => !$passed));
 }
 
 // step 4

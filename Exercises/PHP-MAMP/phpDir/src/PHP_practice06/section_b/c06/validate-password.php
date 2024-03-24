@@ -34,21 +34,28 @@ session_start();
 // step 1
 $password = '';
 $message = '';
+$errors = [];
 
 // step 2
 function isValidPassword($password)
 {
     // step 3
-    $hasRequiredLength = mb_strlen($password) >= 8;
-    $hasUppercaseLetter = preg_match('/[A-Z]/', $password);
-    $hasLowercaseLetter = preg_match('/[a-z]/', $password);
-    $hasNumber = preg_match('/[0-9]/', $password);
+    $errors = [];
 
-    if ($hasRequiredLength && $hasUppercaseLetter && $hasLowercaseLetter && $hasNumber) {
-        return true;
-    } else {
-        return false;
+    if (mb_strlen($password) < 8) {
+        $errors[] = 'Password must be at least 8 characters long.';
     }
+    if (!preg_match('/[A-Z]/', $password)) {
+        $errors[] = 'Password must contain at least one uppercase letter.';
+    }
+    if (!preg_match('/[a-z]/', $password)) {
+        $errors[] = 'Password must contain at least one lowercase letter.';
+    }
+    if (!preg_match('/[0-9]/', $password)) {
+        $errors[] = 'Password must contain at least one number.';
+    }
+
+    return $errors;
 }
 
 // step 4
@@ -56,14 +63,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Step 5
-    $valid = isValidPassword($password);
+    $errors = isValidPassword($password);
 
     // Step 6 & 7
+    $valid = empty($errors);
     $message = $valid ? 'Password is valid' : 'Password is not strong enough.';
 
     // Store data in session
     $_SESSION['message'] = $message;
     $_SESSION['valid'] = $valid;
+    $_SESSION['errors'] = $errors;
 
     // Redirect to the same page
     header('Location: validate-password.php');
@@ -74,8 +83,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_SESSION['message'])) {
     $message = $_SESSION['message'];
     $valid = $_SESSION['valid'];
+    $errors = $_SESSION['errors'];
     unset($_SESSION['message']);
     unset($_SESSION['valid']);
+    unset($_SESSION['errors']);
 }
 ?>
 
@@ -90,6 +101,13 @@ if (isset($_SESSION['message'])) {
 
     <?php if (!empty($message)) : ?>
         <p class="<?= $valid ? 'success' : 'error' ?>"><?= $message ?></p>
+        <?php if (!$valid) : ?>
+            <ul class="error">
+                <?php foreach ($errors as $error) : ?>
+                    <li><?= $error ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
     <?php endif; ?>
 </div>
 
@@ -100,6 +118,12 @@ if (isset($_SESSION['message'])) {
 
     .success {
         color: lime;
+    }
+
+    ul.error {
+        list-style-position: inside;
+        padding-left: 0;
+        text-align: left;
     }
 </style>
 

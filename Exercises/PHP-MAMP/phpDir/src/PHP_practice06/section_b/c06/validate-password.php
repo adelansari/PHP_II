@@ -1,4 +1,5 @@
 <?php
+
 /* Write PHP code here 
 
 Step 1: Initialize two variables for password and message.
@@ -25,13 +26,11 @@ Step 7: Message can be for example "Password is valid" or if not string
 "Password is not strong enough."
 
 */
-?>
 
-<?php include 'includes/header.php'; ?>
+// Write your code here
 
-<!-- Write PHP code here -->
+session_start();
 
-<?php
 // step 1
 $password = '';
 $message = '';
@@ -40,23 +39,16 @@ $message = '';
 function isValidPassword($password)
 {
     // step 3
-    if (mb_strlen($password) < 8) {
+    $hasRequiredLength = mb_strlen($password) >= 8;
+    $hasUppercaseLetter = preg_match('/[A-Z]/', $password);
+    $hasLowercaseLetter = preg_match('/[a-z]/', $password);
+    $hasNumber = preg_match('/[0-9]/', $password);
+
+    if ($hasRequiredLength && $hasUppercaseLetter && $hasLowercaseLetter && $hasNumber) {
+        return true;
+    } else {
         return false;
     }
-
-    if (!preg_match('/[A-Z]/', $password)) {
-        return false;
-    }
-
-    if (!preg_match('/[a-z]/', $password)) {
-        return false;
-    }
-
-    if (!preg_match('/[0-9]/', $password)) {
-        return false;
-    }
-
-    return true;
 }
 
 // step 4
@@ -68,21 +60,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Step 6 & 7
     $message = $valid ? 'Password is valid' : 'Password is not strong enough.';
+
+    // Store data in session
+    $_SESSION['message'] = $message;
+
+    // Redirect to the same page
+    header('Location: validate-password.php');
+    exit;
+}
+
+// Retrieve data from session
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    unset($_SESSION['message']);
 }
 ?>
+
+<?php include 'includes/header.php'; ?>
 
 <div class="container">
     <h2>Validate Password</h2>
     <form method="post">
-        <p>Password: <input type="password" name="password" value="<?= htmlspecialchars($password) ?>"></p>
+        <p>Password: <input type="password" name="password"></p>
         <p><input type="submit" value="Submit"></p>
     </form>
 
-    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST') : ?>
+    <?php if (!empty($message)) : ?>
         <p><?= $message ?></p>
     <?php endif; ?>
 </div>
-
-
 
 <?php include 'includes/footer.php'; ?>

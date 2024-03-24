@@ -26,8 +26,63 @@ Step 7: Message can be for example "Password is valid" or if not string
 
 */
 ?>
+
 <?php include 'includes/header.php'; ?>
 
-/* Write PHP code here */
+<!-- Write PHP code here -->
+
+<?php
+// step 1
+$password = '';
+$message = '';
+
+// step 2
+function isValidPassword($password)
+{
+    // step 3
+    if (mb_strlen($password) < 8) {
+        return false;
+    }
+
+    if (!preg_match('/[A-Z]/', $password)) {
+        return false;
+    }
+
+    if (!preg_match('/[a-z]/', $password)) {
+        return false;
+    }
+
+    if (!preg_match('/[0-9]/', $password)) {
+        return false;
+    }
+
+    return true;
+}
+
+// step 4
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $password = $_POST['password'] ?? '';
+
+    // Step 5
+    $valid = isValidPassword($password);
+
+    // Step 6 & 7
+    $message = $valid ? 'Password is valid' : 'Password is not strong enough.';
+}
+?>
+
+<div class="container">
+    <h2>Validate Password</h2>
+    <form method="post">
+        <p>Password: <input type="password" name="password" value="<?= htmlspecialchars($password) ?>"></p>
+        <p><input type="submit" value="Submit"></p>
+    </form>
+
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST') : ?>
+        <p><?= $message ?></p>
+    <?php endif; ?>
+</div>
+
+
 
 <?php include 'includes/footer.php'; ?>

@@ -14,7 +14,7 @@ Step 3: Otherwise, simply display the form
 
 <?php if ($_SERVER['REQUEST_METHOD'] === 'POST') :
   $searchTerm = $_POST['search'] ?? ''; ?>
-  <p>You searched for <?= htmlspecialchars($searchTerm) ?></p>
+  <p>You searched for "<?= htmlspecialchars($searchTerm) ?>"</p>
   <input onclick="window.history.back()" type="submit" value="Go back">
 <?php else : ?>
   <form action="check-for-http-post.php" method="post">

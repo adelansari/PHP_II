@@ -28,24 +28,22 @@ $age = '';
 $message = '';
 
 // step 2
-function isNumberInRange($number, $min, $max)
+function isNumberInRange($number, int $min = 0, int $max = 100): bool
 {
-  return is_numeric($number) && $number >= $min && $number <= $max;
+  return ($number >= $min && $number <= $max);
 }
 
 // step 3
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $age = $_POST['age'] ?? '';
 
-  // step 4 and 5
-  if (isNumberInRange($age, 0, 100)) {
-    if ($age >= 16 && $age <= 65) {
-      $message = 'Age is valid';
-    } else {
-      $message = 'You must be 16-65 years old';
-    }
+  // step 4
+  $valid = isNumberInRange($age, 16, 65);
+  // step 5
+  if ($valid) {
+    $message = 'Age is valid';
   } else {
-    $message = 'You must enter a number between 0 and 100';
+    $message = 'You must be 16-65 years old';
   }
 }
 ?>

@@ -17,7 +17,7 @@ Step 3: Otherwise, simply display the form
   <p>You searched for <?= htmlspecialchars($searchTerm) ?></p>
   <input onclick="window.history.back()" type="submit" value="Go back">
 <?php else : ?>
-  <form method="post">
+  <form action="check-for-http-post.php" method="post">
     <p>Search: <input type="text" name="search"></p>
     <p><input type="submit" value="Search"></p>
   </form>

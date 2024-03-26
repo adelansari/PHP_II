@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   margin: 0;
   height: 100%;
 }
@@ -7,27 +8,27 @@ body {
   background-color: #000;
   font-family: 'Quicksand', sans-serif;
   color: #fff;
-  text-align: center; 
+  text-align: center;
 }
 
 .content {
   padding-top: 1em;
   background-color: #d4b764;
-  background-image: url("../img/pattern.png");
+  background-image: url('../img/pattern.png');
   background-repeat: repeat;
   min-height: 100%;
 }
 
 .page {
-  background-color:#141d1f;
-  border : 3px solid #fff;
+  background-color: #141d1f;
+  border: 3px solid #fff;
   width: max-content;
   margin: 50px auto;
 }
 
 header {
   text-align: center;
-  padding: 0.5em; 
+  padding: 0.5em;
   border-bottom: 3px double #dab655;
   margin: 0 2em;
 }
@@ -64,7 +65,7 @@ h1 {
   color: #fff;
   margin: 1em 0;
   padding: 1em 1.6em;
-  border-radius: .2em;
+  border-radius: 0.2em;
   font-weight: bold;
   display: inline-block;
 }
@@ -103,4 +104,34 @@ input[type='submit']:hover {
 
 pre {
   text-align: left;
+}
+
+input[type='submit'] {
+  animation: wiggle 2s linear infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  7% {
+    transform: rotateZ(0);
+  }
+  15% {
+    transform: rotateZ(-15deg);
+  }
+  20% {
+    transform: rotateZ(10deg);
+  }
+  25% {
+    transform: rotateZ(-10deg);
+  }
+  30% {
+    transform: rotateZ(6deg);
+  }
+  35% {
+    transform: rotateZ(-4deg);
+  }
+  40%,
+  100% {
+    transform: rotateZ(0);
+  }
 }

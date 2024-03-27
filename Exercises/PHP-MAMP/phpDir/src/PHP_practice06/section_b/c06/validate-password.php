@@ -34,6 +34,7 @@ session_start();
 // step 1
 $password = '';
 $message = '';
+$rules = [];
 
 // step 2
 function isValidPassword($password)
@@ -46,7 +47,7 @@ function isValidPassword($password)
         'at least one number' => preg_match('/[0-9]/', $password),
     ];
 
-    return array_keys(array_filter($rules, fn ($passed) => !$passed));
+    return $rules;
 }
 
 // step 4
@@ -54,14 +55,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
 
     // Step 5
-    $errors = isValidPassword($password);
+    $rules = isValidPassword($password);
+    $errors = array_keys(array_filter($rules, fn ($passed) => !$passed));
 
     // Step 6 & 7
     $valid = empty($errors);
     $message = $valid ? 'Password is valid' : 'Password is not strong enough.';
 
     // Store data in session
-    $_SESSION = compact('message', 'valid', 'errors');
+    $_SESSION = compact('message', 'valid', 'errors', 'rules');
 
     // Redirect to the same page
     header('Location: validate-password.php');
@@ -84,19 +86,18 @@ $_SESSION = [];
 
     <?php if (!empty($message)) : ?>
         <p class="<?= $valid ? 'success' : 'error' ?>"><?= $message ?></p>
-        <?php if (!$valid) : ?>
-            <ul class="error">
-                <?php foreach ($errors as $error) : ?>
-                    <li>Password must be <?= $error ?>.</li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
+        <ul class="error">
+            <?php foreach ($rules as $rule => $passed) : ?>
+                <li class="<?= in_array($rule, $errors) ? 'error' : 'not-error' ?>">Password must be <?= $rule ?>.</li>
+            <?php endforeach; ?>
+        </ul>
     <?php endif; ?>
 </div>
 
 <style>
     .error {
         color: #CC2936;
+        list-style-type: disc;
     }
 
     .success {
@@ -105,10 +106,14 @@ $_SESSION = [];
 
     ul.error {
         list-style-position: inside;
-        padding-left: 0;
         text-align: left;
     }
+
+    li.not-error {
+        text-decoration: line-through;
+    }
 </style>
+
 
 
 <?php include 'includes/footer.php'; ?>

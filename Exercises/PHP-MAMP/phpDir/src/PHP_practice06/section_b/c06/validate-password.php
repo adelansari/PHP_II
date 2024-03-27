@@ -96,7 +96,7 @@ $_SESSION = [];
 
 <style>
     .error {
-        color: red;
+        color: #CC2936;
     }
 
     .success {

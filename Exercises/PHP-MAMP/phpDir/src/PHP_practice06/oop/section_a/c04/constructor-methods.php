@@ -72,28 +72,34 @@ class Account
   }
 }
 
-$checkingAccount = new Account('123456', 'Checking', 32.00);
-$savingsAccount = new Account('789012', 'Savings', 756.00);
+// step 5
+$checkingAccount = new Account('10000', 'Checking', 32.00);
+$savingsAccount = new Account('10001', 'Savings', 756.00);
 ?>
+
 
 <?php include 'includes/header.php'; ?>
 <h2>Account Balances</h2>
 <table>
+  <!-- step 6 -->
   <tr>
     <th>Date</th>
     <th><?= $checkingAccount->type ?></th>
     <th><?= $savingsAccount->type ?></th>
   </tr>
+  <!-- step 7 -->
   <tr>
     <td>23 June</td>
     <td>$<?= $checkingAccount->balance ?></td>
     <td>$<?= $savingsAccount->balance ?></td>
   </tr>
+  <!-- step 8 -->
   <tr>
     <td>24 June</td>
     <td>$<?= $checkingAccount->deposit(12) ?></td>
     <td>$<?= $savingsAccount->withdraw(100) ?></td>
   </tr>
+  <!-- step 9 -->
   <tr>
     <td>25 June</td>
     <td>$<?= $checkingAccount->withdraw(5) ?></td>

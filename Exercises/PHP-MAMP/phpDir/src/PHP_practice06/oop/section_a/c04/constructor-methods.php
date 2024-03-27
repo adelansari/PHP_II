@@ -1,4 +1,7 @@
 <?php
+
+// step 1
+declare(strict_types=1);
 /* Write your PHP code here
 
 Step 1: Use and declare php strict types
@@ -36,24 +39,65 @@ Step 9: In the final row of the table, previous step is repeated using different
 
 ?>
 
+<?php
+
+class Account
+{
+  // step 2
+  public $number;
+  public $type;
+  public $balance;
+
+  // step 3
+  public function __construct(string $number, string $type, float $balance = 0.00)
+  {
+    $this->number = $number;
+    $this->type = $type;
+    $this->balance = $balance;
+  }
+
+  // step 4
+  public function deposit(float $amount): float
+  {
+    $this->balance += $amount;
+    return $this->balance;
+  }
+
+  public function withdraw(float $amount): float
+  {
+    if ($amount <= $this->balance) {
+      $this->balance -= $amount;
+    }
+    return $this->balance;
+  }
+}
+
+$checkingAccount = new Account('123456', 'Checking', 32.00);
+$savingsAccount = new Account('789012', 'Savings', 756.00);
+?>
+
 <?php include 'includes/header.php'; ?>
 <h2>Account Balances</h2>
 <table>
   <tr>
     <th>Date</th>
-
+    <th><?= $checkingAccount->type ?></th>
+    <th><?= $savingsAccount->type ?></th>
   </tr>
   <tr>
     <td>23 June</td>
-
+    <td>$<?= $checkingAccount->balance ?></td>
+    <td>$<?= $savingsAccount->balance ?></td>
   </tr>
   <tr>
     <td>24 June</td>
-
+    <td>$<?= $checkingAccount->deposit(12) ?></td>
+    <td>$<?= $savingsAccount->withdraw(100) ?></td>
   </tr>
   <tr>
     <td>25 June</td>
-
+    <td>$<?= $checkingAccount->withdraw(5) ?></td>
+    <td>$<?= $savingsAccount->deposit(300) ?></td>
   </tr>
 </table>
 <?php include 'includes/footer.php'; ?>

@@ -85,6 +85,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_id"])) {
     }
 }
 
+// Select records
+$sql = "SELECT id, username, password FROM users";
+$result = $conn->query($sql);
+
 ?>
 
 <form action="login.php" method="post">

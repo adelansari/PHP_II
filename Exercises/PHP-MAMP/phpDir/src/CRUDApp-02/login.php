@@ -30,10 +30,11 @@ if ($conn->connect_error) {
     echo "Connected to MySQL server successfully!";
 }
 
-// create the records inside db
-$query = "INSERT INTO users(username, password)";
-$query .= "VALUES ('$user', '$pass')";
+// // create the records inside db
+// $query = "INSERT INTO users(username, password)";
+// $query .= "VALUES ('$user', '$pass')";
 
+$query = "SELECT * FROM users";
 $result = mysqli_query($conn, $query);
 
 if (!$result) {
@@ -42,14 +43,21 @@ if (!$result) {
     echo "Record created successfully!";
 }
 
-
+while ($row = mysqli_fetch_assoc($result)) { ?>
+    <pre>
+        <?php
+        print_r($row);
+        ?>
+    </pre>
+<?php
+}
 ?>
 
 
-<form action="login.php" method="post">
+<!-- <form action="login.php" method="post">
     <label for="username">Username</label>
     <input type="text" name="username">
     <label for=" password">Password</label>
     <input type="password" name="password">
     <input type="submit" name="submit" value="Submit">
-</form>
+</form> -->

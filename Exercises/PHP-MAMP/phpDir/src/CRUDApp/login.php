@@ -40,7 +40,9 @@ $result = $conn->query("SELECT * FROM users");
 
 
 <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
 </head>
 
 <div id="toast" class="toast">Some text</div>
@@ -66,15 +68,10 @@ $result = $conn->query("SELECT * FROM users");
                 <td><?= $row["username"] ?></td>
                 <td><?= $row["password"] ?></td>
                 <td class='actions'>
-                    <form method='post' style='display: inline-block;'>
-                        <input type='hidden' name='edit_id' value='<?= $row["id"] ?>'>
-                        <input type='text' name='edit_username' value='<?= $row["username"] ?>'>
-                        <input type='text' name='edit_password' value='<?= $row["password"] ?>'>
-                        <button type='submit'>Edit</button>
-                    </form>
+                    <i class="material-icons" onclick="editRow(this)">edit</i>
                     <form method='post' style='display: inline-block;'>
                         <input type='hidden' name='delete_id' value='<?= $row["id"] ?>'>
-                        <button type='submit'>Delete</button>
+                        <button type='submit'><i class="material-icons">delete</i></button>
                     </form>
                 </td>
             </tr>
@@ -86,23 +83,9 @@ $result = $conn->query("SELECT * FROM users");
     <?php endif; ?>
 </table>
 
-
 <script>
-    function showToast(message) {
-        var toast = document.getElementById("toast");
-        toast.innerHTML = message;
-        toast.className = "toast show";
-        setTimeout(function() {
-            toast.className = toast.className.replace("show", "");
-        }, 3000);
-    }
-</script>
-
-<script>
-    if (typeof <?php echo json_encode($_SESSION["toastMessage"]); ?> !== 'undefined') {
-        showToast(<?php echo json_encode($_SESSION["toastMessage"]); ?>);
-        <?php unset($_SESSION["toastMessage"]); ?>
-    }
+    setToastMessage(<?php echo json_encode($_SESSION["toastMessage"]); ?>);
+    <?php unset($_SESSION["toastMessage"]); ?>
 </script>
 
 <?php

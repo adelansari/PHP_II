@@ -12,6 +12,10 @@
   --transition: 0.3s ease-in-out;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: var(--main-font);
   margin: 0;
@@ -74,7 +78,8 @@ td.actions {
   color: var(--primary-color);
 }
 
-.delete-icon:hover {
+.delete-icon:hover,
+.close-icon:hover {
   color: var(--danger-color);
 }
 

@@ -33,6 +33,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute();
         $_SESSION["toastMessage"] = "Data edited successfully";
     }
+
+    // Redirect to the same page to prevent form resubmission on refresh
+    header("Location: " . $_SERVER["PHP_SELF"]);
+    exit;
 }
 
 $result = $conn->query("SELECT * FROM users");

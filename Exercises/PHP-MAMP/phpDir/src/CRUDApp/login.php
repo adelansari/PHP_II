@@ -1,96 +1,49 @@
-<head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-
 <?php
+session_start();
+
 $servername = "db";
 $dbUsername = "root";
 $dbPassword = "lionPass";
 $dbname = "loginapp";
 
-// Create connection
 $conn = new mysqli($servername, $dbUsername, $dbPassword, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"])) {
-    $formUsername = $_POST["username"];
-    $formPassword = $_POST["password"];
-
-    // Insert records
-    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        die("Error preparing statement: " . $conn->error);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["username"]) && isset($_POST["password"])) {
+        $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+        $stmt->bind_param("ss", $_POST["username"], $_POST["password"]);
+        $stmt->execute();
+        $_SESSION["toastMessage"] = "Data added successfully";
     }
-    $stmt->bind_param("ss", $formUsername, $formPassword);
 
-    if ($stmt->execute() === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    if (isset($_POST["delete_id"])) {
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param("i", $_POST["delete_id"]);
+        $stmt->execute();
+        $_SESSION["toastMessage"] = "Data deleted successfully";
+    }
+
+    if (isset($_POST["edit_id"])) {
+        $stmt = $conn->prepare("UPDATE users SET username = ?, password = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $_POST["edit_username"], $_POST["edit_password"], $_POST["edit_id"]);
+        $stmt->execute();
+        $_SESSION["toastMessage"] = "Data edited successfully";
     }
 }
 
-// Select records
-$sql = "SELECT id, username, password FROM users";
-$result = $conn->query($sql);
-
+$result = $conn->query("SELECT * FROM users");
 ?>
 
 
-<?php
+<head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
 
-// Check if delete action is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["delete_id"])) {
-    $id = $_POST["delete_id"];
-
-    // Delete record
-    $sql = "DELETE FROM users WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        die("Error preparing statement: " . $conn->error);
-    }
-    $stmt->bind_param("i", $id);
-
-    if ($stmt->execute() === TRUE) {
-        echo "Record deleted successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-}
-
-// Check if edit action is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["edit_id"])) {
-    $id = $_POST["edit_id"];
-    $username = $_POST["edit_username"];
-    $password = $_POST["edit_password"];
-
-    // Update record
-    $sql = "UPDATE users SET username = ?, password = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        die("Error preparing statement: " . $conn->error);
-    }
-    $stmt->bind_param("ssi", $username, $password, $id);
-
-    if ($stmt->execute() === TRUE) {
-        echo "Record updated successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-}
-
-// Select records
-$sql = "SELECT id, username, password FROM users";
-$result = $conn->query($sql);
-
-?>
-
+<div id="toast" class="toast">Some text</div>
 <form action="login.php" method="post">
     <label for="username">Username</label>
     <input type="text" name="username">
@@ -132,6 +85,25 @@ $result = $conn->query($sql);
         </tr>
     <?php endif; ?>
 </table>
+
+
+<script>
+    function showToast(message) {
+        var toast = document.getElementById("toast");
+        toast.innerHTML = message;
+        toast.className = "toast show";
+        setTimeout(function() {
+            toast.className = toast.className.replace("show", "");
+        }, 3000);
+    }
+</script>
+
+<script>
+    if (typeof <?php echo json_encode($_SESSION["toastMessage"]); ?> !== 'undefined') {
+        showToast(<?php echo json_encode($_SESSION["toastMessage"]); ?>);
+        <?php unset($_SESSION["toastMessage"]); ?>
+    }
+</script>
 
 <?php
 $conn->close();

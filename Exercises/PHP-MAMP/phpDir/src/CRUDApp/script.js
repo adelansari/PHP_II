@@ -12,29 +12,41 @@ function setToastMessage(message) {
     showToast(message);
   }
 }
-
 function editRow(icon) {
   const row = icon.parentNode.parentNode;
-  const id = row.children[0].innerHTML;
-  const username = row.children[1];
-  const password = row.children[2];
+  const usernameCell = row.children[1];
+  const passwordCell = row.children[2];
+  const username = usernameCell.textContent;
+  const password = passwordCell.getAttribute('data-password');
   const actions = row.children[3];
+  const deleteIcon = actions.querySelector('.delete-icon');
 
-  if (icon.innerHTML === 'edit') {
-    username.innerHTML = `<input type="text" class="edit-input" value="${username.innerHTML}">`;
-    password.innerHTML = `<input type="text" class="edit-input" value="${password.dataset.password}">`;
-    actions.innerHTML = '<i class="material-icons check-icon" onclick="submitEdit(this)">check</i>';
-    icon.innerHTML = 'cancel';
+  if (icon.textContent === 'edit') {
+    usernameCell.innerHTML = `<input type="text" value="${username}">`;
+    passwordCell.innerHTML = `<input type="text" value="${password}">`;
+    usernameCell.setAttribute('data-original', username); // Store the original username
+    passwordCell.setAttribute('data-original', password); // Store the original password
+    icon.textContent = 'save';
+    deleteIcon.textContent = 'close';
+    deleteIcon.onclick = function () {
+      cancelEdit(this);
+    };
   } else {
-    username.innerHTML = username.children[0].value;
-    password.innerHTML = '••••••••';
-    actions.innerHTML = `<i class="material-icons" onclick="editRow(this)">edit</i>
-         <form method="post" style="display: inline-block;">
-           <input type="hidden" name="delete_id" value="${id}">
-           <button type="submit"><i class="material-icons">delete</i></button>
-         </form>`;
-    icon.innerHTML = 'edit';
+    submitEdit(icon);
   }
+}
+
+function cancelEdit(icon) {
+  const row = icon.parentNode.parentNode;
+  const usernameCell = row.children[1];
+  const passwordCell = row.children[2];
+  usernameCell.textContent = usernameCell.getAttribute('data-original'); // Revert to the original username
+  passwordCell.textContent = '••••••••'; // Revert to the original password
+  row.querySelector('.edit-icon').textContent = 'edit';
+  icon.textContent = 'delete';
+  icon.onclick = function () {
+    deleteRow(this);
+  };
 }
 
 function deleteRow(id) {

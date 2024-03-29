@@ -14,7 +14,9 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["username"]) && isset($_POST["password"])) {
+        // $hashed_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
         $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+        // $stmt->bind_param("ss", $_POST["username"], $hashed_password);
         $stmt->bind_param("ss", $_POST["username"], $_POST["password"]);
         $stmt->execute();
         $_SESSION["toastMessage"] = "Data added successfully";
@@ -42,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $result = $conn->query("SELECT * FROM users");
 ?>
 
+<html>
 
 <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -49,48 +52,63 @@ $result = $conn->query("SELECT * FROM users");
     <script src="script.js"></script>
 </head>
 
-<div id="toast" class="toast">Some text</div>
-<form action="login.php" method="post">
-    <label for="username">Username</label>
-    <input type="text" name="username">
-    <label for="password">Password</label>
-    <input type="password" name="password">
-    <input type="submit" name="submit" value="Submit">
-</form>
+<body>
+    <div class="container">
+        <header>
+            <h1>User Management</h1>
+        </header>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Password</th>
-        <th class="actions">Actions</th>
-    </tr>
-    <?php if ($result->num_rows > 0) : ?>
-        <?php while ($row = $result->fetch_assoc()) : ?>
-            <tr>
-                <td><?= $row["id"] ?></td>
-                <td><?= $row["username"] ?></td>
-                <td><?= $row["password"] ?></td>
-                <td class='actions'>
-                    <i class="material-icons" onclick="editRow(this)">edit</i>
-                    <form method='post' style='display: inline-block;'>
-                        <input type='hidden' name='delete_id' value='<?= $row["id"] ?>'>
-                        <button type='submit'><i class="material-icons">delete</i></button>
-                    </form>
-                </td>
-            </tr>
-        <?php endwhile; ?>
-    <?php else : ?>
-        <tr>
-            <td colspan='4'>0 results</td>
-        </tr>
-    <?php endif; ?>
-</table>
+        <div id="toast" class="toast">Some text</div>
+        <form action="login.php" method="post">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <input type="submit" name="submit" value="Submit">
+        </form>
 
-<script>
-    setToastMessage(<?php echo json_encode($_SESSION["toastMessage"]); ?>);
-    <?php unset($_SESSION["toastMessage"]); ?>
-</script>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th class="actions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if ($result->num_rows > 0) : ?>
+                    <?php while ($row = $result->fetch_assoc()) : ?>
+                        <tr>
+                            <td><?= $row["id"] ?></td>
+                            <td><?= $row["username"] ?></td>
+                            <td data-password="<?= $row["password"] ?>">••••••••</td>
+                            <td class='actions'>
+                                <i class="material-icons edit-icon" onclick="editRow(this)">edit</i>
+                                <i class="material-icons delete-icon" onclick="deleteRow(<?= $row['id'] ?>)">delete</i>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                <?php else : ?>
+                    <tr>
+                        <td colspan='4'>0 results</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        setToastMessage(<?php echo json_encode($_SESSION["toastMessage"]); ?>);
+        <?php unset($_SESSION["toastMessage"]); ?>
+    </script>
+</body>
+
+</html>
 
 <?php
 $conn->close();

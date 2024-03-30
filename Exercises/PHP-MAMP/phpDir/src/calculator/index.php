@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
             <option value="multiply">&times;</option>
             <option value="divide">&divide;</option>
         </select>
-        <input type="submit" value="Calculate">
+        <input type="submit" name="submit" value="Calculate">
         <?php if ($result) : ?>
             <h2>Result: <?php echo $result; ?></h2>
         <?php endif; ?>

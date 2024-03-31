@@ -120,36 +120,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter</title>
+    <title>Measurement Converter</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
-
 <body>
-    <form method="POST" id="converterForm">
-        <div class="container">
-            <select id="type" class="dropdown" name="type">
-                <option value="temperature" <?php echo $type == 'temperature' ? 'selected' : ''; ?>>Temperature</option>
-                <option value="speed" <?php echo $type == 'speed' ? 'selected' : ''; ?>>Speed</option>
-                <option value="mass" <?php echo $type == 'mass' ? 'selected' : ''; ?>>Mass</option>
-                <option value="length" <?php echo $type == 'length' ? 'selected' : ''; ?>>Length</option>
-                <option value="volume" <?php echo $type == 'volume' ? 'selected' : ''; ?>>Volume</option>
-            </select>
+    <div class="content">
 
-            <div class="input-group">
-                <div class="input-section">
-                    <input id="value1" class="input" value="<?php echo $value; ?>" name="value" />
-                    <select id="unit1" class="dropdown" name="unitFrom"></select>
+        <header>
+            <h1>Measurement Converter</h1>
+        </header>
+
+        <form method="POST" id="converterForm">
+            <div class="container">
+                <select id="type" class="dropdown" name="type">
+                    <option value="temperature" <?php echo $type == 'temperature' ? 'selected' : ''; ?>>Temperature</option>
+                    <option value="speed" <?php echo $type == 'speed' ? 'selected' : ''; ?>>Speed</option>
+                    <option value="mass" <?php echo $type == 'mass' ? 'selected' : ''; ?>>Mass</option>
+                    <option value="length" <?php echo $type == 'length' ? 'selected' : ''; ?>>Length</option>
+                    <option value="volume" <?php echo $type == 'volume' ? 'selected' : ''; ?>>Volume</option>
+                </select>
+
+                <div class="input-group">
+                    <div class="input-section">
+                        <input type="number" id="value1" class="input" value="<?php echo $value; ?>" name="value" />
+                        <select id="unit1" class="dropdown" name="unitFrom"></select>
+                    </div>
+                    <div class="equals">=</div>
+                    <div class="input-section">
+                        <input type="number" id="value2" class="input" value="<?php echo $result; ?>" name="result" readonly />
+                        <select id="unit2" class="dropdown" name="unitTo"></select>
+                    </div>
                 </div>
-                <div class="equals">=</div>
-                <div class="input-section">
-                    <input id="value2" class="input" value="<?php echo $result; ?>" name="result" readonly />
-                    <select id="unit2" class="dropdown" name="unitTo"></select>
-                </div>
+                <input type="submit" value="Convert" />
             </div>
-            <input type="submit" value="Convert" />
-        </div>
-    </form>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; Adel Ansari - <a href="https://github.com/adelansari/PHP_II" target="_blank">Github Repo</a></p>
+    </footer>
 
     <script>
         const units = {

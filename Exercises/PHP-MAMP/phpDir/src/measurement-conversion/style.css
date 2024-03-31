@@ -1,0 +1,61 @@
+.container {
+  border-radius: 8px;
+  padding: 20px 16px 24px;
+  background-color: rgb(32, 33, 36);
+  width: 618px;
+  margin: 0 auto;
+}
+
+.dropdown,
+.input {
+  color: rgb(255, 255, 255);
+  background: rgb(48, 49, 52);
+  border: 1px solid rgb(60, 64, 67);
+  font-size: 13px;
+  line-height: 20px;
+  padding: 5px 16px 5px 5px;
+  appearance: none;
+  outline: none;
+  font-family: arial, sans-serif;
+  width: 100%;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+}
+
+.input-section {
+  width: 45%;
+}
+
+.equals {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: rgb(154, 160, 166);
+  padding-top: 10px;
+  vertical-align: top;
+  margin-left: -4px;
+  margin-right: -4px;
+}
+
+input[type='submit'] {
+  background-color: rgb(60, 64, 67);
+  color: rgb(255, 255, 255);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+input[type='submit']:hover {
+  background-color: rgb(48, 49, 52);
+}

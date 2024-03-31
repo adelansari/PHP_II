@@ -22,6 +22,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  font-family: 'VT323', monospace;
 }
 
 header {
@@ -109,7 +110,6 @@ input[type='submit']:hover {
 footer {
   text-align: center;
   margin-top: auto;
-  color: white;
   padding: 10px 0;
   background: rgba(32, 33, 36, 0.7);
   backdrop-filter: blur(5px);

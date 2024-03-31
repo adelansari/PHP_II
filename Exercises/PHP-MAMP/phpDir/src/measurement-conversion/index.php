@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <footer>
-        <p>&copy; Adel Ansari - <a href="https://github.com/adelansari/PHP_II" target="_blank">Github Repo</a></p>
+        <p>&copy; Adel Ansari - <a href="https://github.com/adelansari/PHP_II/tree/main/Exercises/PHP-MAMP/phpDir/src/measurement-conversion" target="_blank">Github Repo</a></p>
     </footer>
 
     <script>

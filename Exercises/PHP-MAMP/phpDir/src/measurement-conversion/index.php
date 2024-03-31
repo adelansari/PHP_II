@@ -1,52 +1,19 @@
 <?php
-/*
-write PHP code to do the measurement conversion for:
-- Temperature
-    - Celsius to Fahrenheit
-    - Celsius to Kelvin
-    - Fahrenheit to Celsius
-    - Fahrenheit to Kelvin
-    - Kelvin to Celsius
-    - Kelvin to Fahrenheit
-    - if the same unit is selected for both unitFrom and unitTo, then the value should be returned as it is.
-- Speed
-    - kmph to mps
-    - kmph to knots
-    - mps to kmph
-    - mps to knots
-    - knots to kmph
-    - knots to mps
-    - if the same unit is selected for both unitFrom and unitTo, then the value should be returned as it is.
-- Mass
-    - kg to grams
-    - grams to kg
-    - kg to pounds
-    - pounds to kg
-    - grams to pounds
-    - pounds to grams
-    - if the same unit is selected for both unitFrom and unitTo, then the value should be returned as it is.
-- Length
-    - meters to centimeters
-    - centimeters to meters
-    - meters to kilometers
-    - kilometers to meters
-    - meters to inches
-    - inches to meters
-    - if the same unit is selected for both unitFrom and unitTo, then the value should be returned as it is.
-- Volume
-    - liters to milliliters
-    - milliliters to liters
-    - liters to gallons
-    - gallons to liters
-    - if the same unit is selected for both unitFrom and unitTo, then the value should be returned as it is.
 
-*/
 
 class Converter
 {
+    private $conversionTable = [
+        'speed' => ['kmph' => 1, 'mps' => 0.277778, 'knots' => 0.539957],
+        'mass' => ['kg' => 1, 'grams' => 1000, 'pounds' => 2.20462],
+        'length' => ['meters' => 1, 'centimeters' => 100, 'kilometers' => 0.001, 'inches' => 39.3701],
+        'volume' => ['liters' => 1, 'milliliters' => 1000, 'gallons' => 0.264172]
+    ];
+
     public function convert($value, $unitFrom, $unitTo, $type)
     {
         if ($unitFrom == $unitTo) return $value;
+
         return match ($type) {
             'temperature' => match ([$unitFrom, $unitTo]) {
                 ['celsius', 'fahrenheit'] => $value * 9 / 5 + 32,
@@ -55,60 +22,20 @@ class Converter
                 ['fahrenheit', 'kelvin'] => ($value - 32) * 5 / 9 + 273.15,
                 ['kelvin', 'celsius'] => $value - 273.15,
                 ['kelvin', 'fahrenheit'] => ($value - 273.15) * 9 / 5 + 32,
+                default => $value
             },
-            'speed' => match ([$unitFrom, $unitTo]) {
-                ['kmph', 'mps'] => $value / 3.6,
-                ['kmph', 'knots'] => $value / 1.852,
-                ['mps', 'kmph'] => $value * 3.6,
-                ['mps', 'knots'] => $value * 1.94384,
-                ['knots', 'kmph'] => $value * 1.852,
-                ['knots', 'mps'] => $value / 1.94384,
-            },
-            'mass' => match ([$unitFrom, $unitTo]) {
-                ['kg', 'grams'] => $value * 1000,
-                ['kg', 'pounds'] => $value * 2.20462,
-                ['grams', 'kg'] => $value / 1000,
-                ['grams', 'pounds'] => $value / 453.592,
-                ['pounds', 'kg'] => $value / 2.20462,
-                ['pounds', 'grams'] => $value * 453.592,
-            },
-            'length' => match ([$unitFrom, $unitTo]) {
-                ['meters', 'centimeters'] => $value * 100,
-                ['meters', 'kilometers'] => $value / 1000,
-                ['meters', 'inches'] => $value * 39.3701,
-                ['centimeters', 'meters'] => $value / 100,
-                ['centimeters', 'kilometers'] => $value / 100000,
-                ['centimeters', 'inches'] => $value / 2.54,
-                ['kilometers', 'meters'] => $value * 1000,
-                ['kilometers', 'centimeters'] => $value * 100000,
-                ['kilometers', 'inches'] => $value * 39370.1,
-                ['inches', 'meters'] => $value / 39.3701,
-                ['inches', 'centimeters'] => $value * 2.54,
-                ['inches', 'kilometers'] => $value / 39370.1,
-            },
-            'volume' => match ([$unitFrom, $unitTo]) {
-                ['liters', 'milliliters'] => $value * 1000,
-                ['liters', 'gallons'] => $value / 3.78541,
-                ['milliliters', 'liters'] => $value / 1000,
-                ['milliliters', 'gallons'] => $value / 3785.41,
-                ['gallons', 'liters'] => $value * 3.78541,
-                ['gallons', 'milliliters'] => $value * 3785.41,
-            },
+            default => $value * $this->conversionTable[$type][$unitTo] / $this->conversionTable[$type][$unitFrom]
         };
     }
 }
 
-$value = null;
-$unitFrom = null;
-$unitTo = null;
-$type = null;
+$value = $_POST['value'] ?? null;
+$unitFrom = $_POST['unitFrom'] ?? null;
+$unitTo = $_POST['unitTo'] ?? null;
+$type = $_POST['type'] ?? null;
 $result = null;
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $value = $_POST['value'];
-    $unitFrom = $_POST['unitFrom'];
-    $unitTo = $_POST['unitTo'];
-    $type = $_POST['type'];
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $converter = new Converter();
     $result = $converter->convert($value, $unitFrom, $unitTo, $type);
 }

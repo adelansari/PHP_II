@@ -78,6 +78,10 @@ if (isset($_POST['submit'])) {
             <h2>Result: <?php echo $result; ?></h2>
         <?php endif; ?>
     </form>
+
+    <footer>
+        <p>&copy; Adel Ansari - <a href="https://github.com/adelansari/PHP_II/tree/main/Exercises/PHP-MAMP/phpDir/src/calculator" target="_blank">Github Repo</a></p>
+    </footer>
 </body>
 
 </html>

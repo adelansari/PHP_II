@@ -1,31 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background-color: #333;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+header {
+  padding: 1rem;
+  text-align: center;
+}
+
 .container {
-  border-radius: 8px;
-  padding: 20px 16px 24px;
+  border-radius: 0.5rem;
+  padding: 1.25rem 1rem 1.5rem;
   background-color: rgb(32, 33, 36);
-  width: 618px;
+  width: 90%;
+  max-width: 40rem;
   margin: 0 auto;
+}
+
+#type {
+  margin-bottom: 1rem;
 }
 
 .dropdown,
 .input {
   color: rgb(255, 255, 255);
-  background: rgb(48, 49, 52);
   border: 1px solid rgb(60, 64, 67);
-  font-size: 13px;
-  line-height: 20px;
+  line-height: 1.25rem;
   padding: 5px 16px 5px 5px;
-  appearance: none;
   outline: none;
-  font-family: arial, sans-serif;
   width: 100%;
-  margin-bottom: 10px;
   box-sizing: border-box;
+}
+
+.input {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 2rem;
+  text-align: center;
+  background-color: rgb(32, 33, 36);
+}
+
+.dropdown {
+  background-color: rgb(48, 49, 52);
+  font-size: 1rem;
 }
 
 .input-group {
   display: flex;
   justify-content: space-between;
-  padding-top: 10px;
+  padding-top: 0.7rem;
 }
 
 .input-section {
@@ -36,12 +79,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 2rem;
   color: rgb(154, 160, 166);
-  padding-top: 10px;
+  padding-top: 0.7rem;
   vertical-align: top;
-  margin-left: -4px;
-  margin-right: -4px;
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
 }
 
 input[type='submit'] {
@@ -58,4 +101,22 @@ input[type='submit'] {
 
 input[type='submit']:hover {
   background-color: rgb(48, 49, 52);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  margin-top: auto;
+  color: white;
+  padding: 10px 0;
+}
+
+footer a {
+  color: yellow;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #aff608;
+  text-decoration: none;
 }
